@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="dang_ky.css">
+    <script>
+        function checkForm() {
+            var loi = 0;
+            var ma = document.getElementById("student-id");
+            var erID = document.getElementById("erID");
+            if (ma.value.length == 0) {
+                ma.style.backgroundColor = "yellow";
+                erID.style.display = "block";
+                loi++;
+            } else {
+                erID.style.display = "none";
+            }
+
+            var ten = document.getElementById("name");
+            var erName = document.getElementById("erName");
+            if (ten.value.length == 0) {
+                ten.style.backgroundColor = "yellow";
+                erName.style.display = "block";
+                loi++;
+            } else {
+                erName.style.display = "none";
+            }
+
+            var email = document.getElementById("email");
+            var erEmail = document.getElementById("erEmail");
+            var co = false;
+            if (email.value.length == 0) {
+                email.style.backgroundColor = "yellow";
+                erEmail.style.display = "block";
+                loi++;
+                co = true;
+            } else {
+                erEmail.style.display = "none";
+            }
+            
+            var emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!co && !emailCheck.test(email.value)) {
+                email.style.backgroundColor = "yellow";
+                erEmail.style.display = "block";
+                erEmail.innerText = "Email sai định dạng!";
+                loi++;
+            } else if (!co && emailCheck.test(email.value)) {
+                erEmail.style.display = "none";
+                console.log("kk");
+            }
+
+            var gender = document.getElementsByName("gender");
+            var erGender = document.getElementById("erGender");
+            if (!gender[0].checked && !gender[1].checked) {
+                erGender.style.display = "block";
+                loi++;
+            } else {
+                erGender.style.display = "none";
+            }
+
+            var count = 0
+            var soThich = document.getElementsByName("hobbies");
+            var erHobbies = document.getElementById("erHobbies");
+            for (let i = 0; i < soThich.length; i++) {
+                if (soThich[i].checked) {
+                    count++;
+                }
+            }
+            if (count < 1) {
+                erHobbies.style.display = "block";
+                loi++;
+            } else {
+                erHobbies.style.display = "none";
+            }
+
+            var nationality = document.getElementById("nationality");
+            var erNationality = document.getElementById("erNationality");
+            if (nationality.value.length == 0) {
+                erNationality.style.display = "block";
+                loi++;
+            } else {
+                erNationality.style.display = "none";
+            }
+
+            var notes = document.getElementById("notes");
+            var erNotes = document.getElementById("erNotes");
+            if (notes.value.length == 0) {
+                notes.style.backgroundColor = "yellow";
+                erNotes.style.display = "block";
+                loi++;
+            } else if (notes.value.length > 200) {
+                notes.style.backgroundColor = "yellow";
+                erNotes.style.display = "block";
+                erNotes.innerText = "Ghi chú phải ít hơn 200 từ!"
+                loi++;
+            } else {
+                erNotes.style.display = "none";
+                notes.style.backgroundColor = "";
+            }
+
+            if (loi > 0) {
+                return false;
+            }
+            alert("Đang ký thành công!");
+            return true;
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>ĐĂNG KÝ THÀNH VIÊN</h2>
+        <form onsubmit=" return checkForm()">
+           <div class="gh">
+                <label>Mã sinh viên</label>          
+                <p id="erID">Bạn cần nhập mã sinh viên!</p>
+            </div>
+            <input type="text" id="student-id">
+        
+
+            <div class="gh">
+                <label>Họ và tên</label>
+                <p id="erName">Bạn cần nhập họ và tên!</p>
+            </div>
+            <input type="text" id="name">
+            
+
+            <div class="gh">
+                <label>Email</label>
+                <p id="erEmail">Bạn cần nhập email!</p>
+            </div>
+            <input type="text" id="email">
+        
+            <div class="gh">
+                <label>Giới tính</label>
+                <p id="erGender">Bạn cần chọn giới tính!</p>
+            </div>
+            <div class="gender">
+                <input type="radio" name="gender">
+                <label>Nam</label>
+                <input type="radio" name="gender">
+                <label>Nữ</label>
+            </div>
+
+            <div class="gh">
+                <label>Sở thích</label>
+                <p id="erHobbies">Bạn cần chọn ít nhất một sở thích!</p>
+            </div>
+            <div class="hobbies">
+                <input type="checkbox" name="hobbies">
+                <label>Đọc sách</label>
+                <input type="checkbox" name="hobbies">
+                <label>Du lịch</label>
+                <input type="checkbox" name="hobbies">
+                <label>Âm nhạc</label>
+                <input type="checkbox" name="hobbies">
+                <label>Ẩm thực</label>
+                <input type="checkbox" name="hobbies">
+                <label>Khác</label>
+            </div>
+
+            <div class="gh">
+                <label>Quốc tịch</label>
+                <p id="erNationality">Bạn cần chọn Quốc tịch!</p>
+            </div>
+            <select id="nationality" name="nationality" >
+                <option value="" disabled selected>Chọn quốc tịch</option>
+                <option value="Vietnam">Việt Nam</option>
+                <option value="USA">Hoa Kỳ</option>
+                <option value="UK">Anh</option>
+                <option value="Japan">Nhật Bản</option>
+            </select>
+
+            <div class="gh">
+                <label>Ghi chú</label>
+                <p id="erNotes">Bạn cần nhập ghi chú!</p>
+            </div>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <button>Đăng ký</button>
+        </form>
+    </div>
+</body>
+</html>

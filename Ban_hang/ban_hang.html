@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bán hàng</title>
+    <link rel="stylesheet" href="ban_hang.css">
+    <script>
+
+        function filter() {
+            var fil = document.getElementById("price-filter").value;
+            var rows = document.querySelectorAll("#product-table tr");
+
+            rows.forEach(row => {
+                var price = parseInt(row.getAttribute("data-price"));
+                row.style.display = "";
+
+                if (fil === "below-200" && price >=200) {
+                    row.style.display = "none";
+                } else if (fil === "200-500" && (price < 200 || price >500)) {
+                    row.style.display = "none";
+                } else if (fil === "above-500" && price <= 500) {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function calculateTotal() {
+            var rows = document.querySelectorAll("#product-table tr");
+            var totalSum = 0;
+
+            rows.forEach(row => {
+                var checkbox = row.getElementsByTagName("input")[0];
+                var quantityInput = row.querySelector('input[type="number"]');
+                var priceCell = row.children[2];
+                var totalPriceCell = row.querySelector('.total-price');
+                console.log(checkbox);
+
+                if (checkbox.checked) {
+                    quantityInput.disabled = false;
+                    var price = parseInt(priceCell.textContent);
+                    var quantity = parseInt(quantityInput.value);
+                    var totalPrice = price * quantity;
+                    totalPriceCell.innerText = totalPrice;
+                    totalSum += totalPrice;
+                } else {
+                    totalPriceCell.innerText = 0;
+                    quantityInput.setAttribute("disabled", "true");
+                }
+            });
+
+            document.getElementById('total-sum').innerText = totalSum;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>BÁN HÀNG</h2>
+
+        <form action="#">
+            <label>Mức giá</label>
+            <select id="price-filter" onchange="filter()">
+                <option value="all">Tất cả</option>
+                <option value="below-200">Dưới 200</option>
+                <option value="200-500">200-500</option>
+                <option value="above-500">Trên 500</option>
+            </select>
+        </form>
+
+        <table border="1" >
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Hàng hóa</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody id="product-table">
+                <tr data-price="700">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>iPhone 9</td>
+                    <td>700</td>
+                    <td><input type="number" value="0" min="0" disabled  onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="400">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>Samsung</td>
+                    <td>400</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="100">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>Nokia</td>
+                    <td>100</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="450">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>Sony Xperia</td>
+                    <td>450</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="180">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>Motorola</td>
+                    <td>180</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="600">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>Oppo</td>
+                    <td>600</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+                <tr data-price="90">
+                    <td><input name="cbk" type="checkbox" onchange="calculateTotal()"></td>
+                    <td>bPhone</td>
+                    <td>90</td>
+                    <td><input type="number" value="0" min="0" disabled onchange="calculateTotal()"></td>
+                    <td class="total-price">0</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" style="text-align:right"><strong>TỔNG</strong></td>
+                    <td id="total-sum">0</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ sưu tập ảnh</title>
+    <link rel="stylesheet" href="bo_suu_tap.css">
+    <script>
+        var images = [];
+        for (var i = 0; i < 4; i++) {
+            images[i] = new Image();
+            images[i].src = "IMAGE/" + i +".jpg"; 
+        }
+
+        var index = 0;
+        function next() {
+            index++;
+            if (index >= 4) {
+                index = 0;
+            }
+            var anh = document.getElementById("anh");
+            anh.src = images[index].src;
+            document.getElementById("counter").innerText = "Ảnh " + index + "/" + images.length;
+        }
+        function prev() {
+            index--;
+            if (index < 0) {
+                index = 3;
+            }
+            var anh = document.getElementById("anh");
+            anh.src = images[index].src;
+            document.getElementById("counter").innerText = "Ảnh " + index + "/" + images.length;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>BỘ SƯU TẬP ẢNH</h2>
+        <div class="gallery">
+            <button id="prev" onclick="prev()" class="btn">Prev</button>
+            <div class="image-container">
+                <img id="anh" src="IMAGE/0.jpg" alt="Ảnh 1">
+            </div>
+            <button id="next" onclick="next()" class="btn">Next</button>
+        </div>
+        <p id="counter">Ảnh 0/4</p>
+    </div>
+</body>
+</html>
